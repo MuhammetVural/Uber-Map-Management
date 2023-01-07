@@ -1,9 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.uber_map_management">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
    <application
         android:label="uber_map_management"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+       
         <activity
             android:name=".MainActivity"
             android:exported="true"
