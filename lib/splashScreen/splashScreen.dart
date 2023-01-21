@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:uber_map_management/authentication/signInScreen.dart';
 
 
 
@@ -18,17 +19,9 @@ class _MySplashScreenState extends State<MySplashScreen> {
   startTimer(){
 
 
-    Timer(Duration(seconds: 5), () async {
+    Timer(Duration(seconds: 3), () async {
 
-      if(firebaseUser.currentUser != null){
-
-       Navigator.push(context, MaterialPageRoute(builder: (c)=> const HomeScreen()));
-
-      }
-
-      else{
         Navigator.push(context, MaterialPageRoute(builder: (c)=> const SignInScreen()));
-      }
 
 
     });

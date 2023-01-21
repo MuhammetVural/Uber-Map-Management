@@ -2,7 +2,7 @@
 
 
 
-import 'package:delivery_by_bike_riders/widgets/progress_bar.dart';
+import '../widgets/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 class LoadingDialog extends StatelessWidget {
