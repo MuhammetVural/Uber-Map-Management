@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>50500000763-dms6q0s96ob33f7e4dosped2vu76avke.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.50500000763-dms6q0s96ob33f7e4dosped2vu76avke</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDHND1GTn2X8eqaJLG5qnf9IhyD0B7klPY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>50500000763</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.uberMapManagement</string>
+	<key>PROJECT_ID</key>
+	<string>uber-map-management</string>
+	<key>STORAGE_BUCKET</key>
+	<string>uber-map-management.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:50500000763:ios:894ddb9c32416b5247495e</string>
+	<key>DATABASE_URL</key>
+	<string>https://uber-map-management-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

@@ -1,11 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:uber_map_management/splashScreen/splashScreen.dart';
+import 'package:uber_map_management/authentication/signInScreen.dart';
+import 'package:uber_map_management/authentication/sign_up_screen.dart';
+
+import 'firebase_options.dart';
+
 
 void main() async  {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
+
     MyApp(
     child: MaterialApp(
       title: 'Drivers App',
@@ -23,7 +29,7 @@ void main() async  {
         ),
         fontFamily: 'SFProRegular',
       ),
-      home:  MySplashScreen(),
+      home:  SignUpScreen(),
       debugShowCheckedModeBanner: false,
     ),
   ),);

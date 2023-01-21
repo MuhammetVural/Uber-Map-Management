@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "50500000763",
+    "firebase_url": "https://uber-map-management-default-rtdb.firebaseio.com",
     "project_id": "uber-map-management",
     "storage_bucket": "uber-map-management.appspot.com"
   },
