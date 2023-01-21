@@ -10,7 +10,18 @@ void main() async  {
     child: MaterialApp(
       title: 'Drivers App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: Color(0xffCAFB09)),
+          color: Color(0xFF1F1F1F),
+        ),
+        primaryColor: Color(0xffCAFB09),
+        primaryColorDark: Color(0xFF1F1F1F),
+        primaryColorLight: Color(0xFF393939),
+        scaffoldBackgroundColor: Color(0xFFF6F6F8),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Color(0xFFf5f5f5),
+        ),
+        fontFamily: 'SFProRegular',
       ),
       home:  MySplashScreen(),
       debugShowCheckedModeBanner: false,

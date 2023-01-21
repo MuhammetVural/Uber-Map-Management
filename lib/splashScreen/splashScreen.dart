@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:uber_map_management/authentication/signInScreen.dart';
+import 'package:uber_map_management/main_screen.dart';
 
 
 
@@ -21,7 +22,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
 
     Timer(Duration(seconds: 3), () async {
 
-        Navigator.push(context, MaterialPageRoute(builder: (c)=> const SignInScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=>  MainScreen()));
 
 
     });
@@ -42,7 +43,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/images/BikeAnimated.png", width: 219, height: 182,),
+              Image.asset("assets/images/logo-drivers.png", width: 219, height: 182,),
               const SizedBox(height: 10,),
               const Padding(
                 padding: EdgeInsets.all(18.0),
