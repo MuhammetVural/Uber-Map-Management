@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "50500000763",
+    "project_id": "uber-map-management",
+    "storage_bucket": "uber-map-management.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50500000763:android:de116ef65031008b47495e",
+        "android_client_info": {
+          "package_name": "com.example.uber_map_management"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50500000763-2dqkb99m3abasoardr32pq6nodgv1u7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKaScDpiZ613f1FuLRIdeZMVRl34ZwyHI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50500000763-2dqkb99m3abasoardr32pq6nodgv1u7s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
