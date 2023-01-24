@@ -73,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
     if(firebaseUser != null)
     {
-      Map driverMap =
+      Map driverMap = // realtime database codes
       {
         "id": firebaseUser.uid,
         "name": nameTextEditingController.text.trim(),

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_map_management/authentication/signInScreen.dart';
 import 'package:uber_map_management/authentication/sign_up_screen.dart';
+import 'package:uber_map_management/splashScreen/splashScreen.dart';
 
 import 'firebase_options.dart';
 
@@ -29,7 +30,7 @@ void main() async  {
         ),
         fontFamily: 'SFProRegular',
       ),
-      home:  SignUpScreen(),
+      home:  MySplashScreen(),
       debugShowCheckedModeBanner: false,
     ),
   ),);

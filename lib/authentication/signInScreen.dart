@@ -6,6 +6,9 @@ import 'package:uber_map_management/authentication/sign_up_screen.dart';
 import 'package:uber_map_management/main_screen.dart';
 import 'package:uber_map_management/widgets/loading_dialog.dart';
 
+import '../global/global.dart';
+import '../splashScreen/splashScreen.dart';
+
 
 class SignInScreen extends StatefulWidget
 {
@@ -50,10 +53,27 @@ class _SignInScreenState extends State<SignInScreen>
         }
     );
 
+    final User? firebaseUser = (
+        await fAuth.signInWithEmailAndPassword(
+          email: emailTextEditingController.text.trim(),
+          password: passwordTextEditingController.text.trim(),
+        ).catchError((msg){
+          Navigator.pop(context);
+          Fluttertoast.showToast(msg: "Error: " + msg.toString());
+        })
+    ).user;
 
+    if(firebaseUser != null)
+    {
+      currentFirebaseUser = firebaseUser;
       Fluttertoast.showToast(msg: "Login Successful.");
-      Navigator.push(context, MaterialPageRoute(builder: (c)=> MainScreen()));
-
+      Navigator.push(context, MaterialPageRoute(builder: (c)=> const MySplashScreen()));
+    }
+    else
+    {
+      Navigator.pop(context);
+      Fluttertoast.showToast(msg: "Error Occurred during Login.");
+    }
   }
 
   @override
