@@ -10,6 +10,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:uber_map_management/authentication/signInScreen.dart';
 
 import 'global/global.dart';
 
@@ -345,19 +346,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
             child: Icon(Icons.online_prediction),
             onPressed: () async {
-              Position position = await _determinePosition();
-              GoogleMapController controller = await _controller.future;
 
-              controller.animateCamera(
-                CameraUpdate.newCameraPosition(
-                  CameraPosition(
-                    target: LatLng(position.latitude, position.longitude),
-                    zoom: 14,
-                  ),
-                ),
-              );
-
-              setState(() {});
+              fAuth.signOut();
+                Navigator.push(context, MaterialPageRoute(builder: (c) => SignInScreen()));
+              // Position position = await _determinePosition();
+              // GoogleMapController controller = await _controller.future;
+              //
+              // controller.animateCamera(
+              //   CameraUpdate.newCameraPosition(
+              //     CameraPosition(
+              //       target: LatLng(position.latitude, position.longitude),
+              //       zoom: 14,
+              //     ),
+              //   ),
+              // );
+              //
+              // setState(() {});
             },
             backgroundColor: Theme.of(context).primaryColorLight,
             foregroundColor: const Color(0xffCAFB09),
