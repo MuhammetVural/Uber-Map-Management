@@ -1,7 +1,10 @@
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uber_map_management/authentication/signInScreen.dart';
 import 'package:uber_map_management/authentication/sign_up_screen.dart';
+import 'package:uber_map_management/infoHandler/app_info.dart';
 import 'package:uber_map_management/splashScreen/splashScreen.dart';
 
 import 'firebase_options.dart';
@@ -14,24 +17,27 @@ void main() async  {
   runApp(
 
     MyApp(
-    child: MaterialApp(
-      title: 'Drivers App',
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          iconTheme: IconThemeData(color: Color(0xffCAFB09)),
-          color: Color(0xFF1F1F1F),
+    child: ChangeNotifierProvider(
+      create: (context) => AppInfo() ,
+      child: MaterialApp(
+        title: 'Drivers App',
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            iconTheme: IconThemeData(color: Color(0xffCAFB09)),
+            color: Color(0xFF1F1F1F),
+          ),
+          primaryColor: Color(0xffCAFB09),
+          primaryColorDark: Color(0xFF1F1F1F),
+          primaryColorLight: Color(0xFF393939),
+          scaffoldBackgroundColor: Color(0xFFF6F6F8),
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            secondary: Color(0xFFf5f5f5),
+          ),
+          fontFamily: 'SFProRegular',
         ),
-        primaryColor: Color(0xffCAFB09),
-        primaryColorDark: Color(0xFF1F1F1F),
-        primaryColorLight: Color(0xFF393939),
-        scaffoldBackgroundColor: Color(0xFFF6F6F8),
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: Color(0xFFf5f5f5),
-        ),
-        fontFamily: 'SFProRegular',
+        home:  MySplashScreen(),
+        debugShowCheckedModeBanner: false,
       ),
-      home:  MySplashScreen(),
-      debugShowCheckedModeBanner: false,
     ),
   ),);
 }

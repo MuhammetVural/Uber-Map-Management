@@ -43,9 +43,14 @@ dependencies:
   cloud_firestore: ^4.0.4
   firebase_storage: ^11.0.6
 
+  provider: ^6.0.5
+
   geolocator: ^9.0.2
   geocoding: ^2.0.5
+
   fluttertoast: ^8.1.2
+  assets_audio_player: ^3.0.6
+  firebase_messaging: ^14.2.2
 
   shared_preferences: ^2.0.15
   firebase_database: ^10.0.8

@@ -10,6 +10,8 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:uber_map_management/authentication/signInScreen.dart';
+import 'package:uber_map_management/push_notifications/push_notification_system.dart';
 
 import 'global/global.dart';
 
@@ -38,8 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final Completer<GoogleMapController> _controller = Completer();
 
-  final Set<Marker> _markers = <Marker>{};
-  final Set<Polyline> _polylines = <Polyline>{};
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
 
@@ -47,123 +47,54 @@ class _HomeScreenState extends State<HomeScreen> {
   late LatLng destinationLocation;
   late BitmapDescriptor sourceIcon;
   late BitmapDescriptor destinationIcon;
-  late Position currentPosition;
+   Position? currentPosition;
 
   late GoogleMapController newGoogleMapController;
 
   var geoLocator = Geolocator();
 
-  void setSourceAndDestinationMarkerIcons() async {
-    sourceIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.0),
-        'assets/images/location_blue.png');
-    destinationIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.0),
-        'assets/images/location_red.png');
+
+
+  locateUserPosition() async {
+    Position cPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    currentPosition = cPosition;
+
+    LatLng latLngPosition =
+    LatLng(currentPosition!.latitude, currentPosition!.longitude);
+
+    CameraPosition cameraPosition = CameraPosition(
+      target: latLngPosition,
+      zoom: 16,
+    );
+    newGoogleMapController!
+        .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+
+
   }
 
-  void locatePosition() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    currentPosition = position;
-
-    LatLng latLatPosition = LatLng(position.latitude, position.longitude);
-
-    CameraPosition cameraPosition =
-    new CameraPosition(target: latLatPosition, zoom: 16);
-    newGoogleMapController
-        .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  readCurrentDriverInformation() async
+  {
+    currentFirebaseUser = fAuth.currentUser;
+    PushNotificationSystem pushNotificationSystem = PushNotificationSystem();
+    pushNotificationSystem.initializeCloudMessaging(context);
+    pushNotificationSystem.generateAndGetToken();
   }
 
   @override
   void initState() {
-    locatePosition();
+    locateUserPosition();
     polylinePoints = PolylinePoints();
     super.initState();
-
+    readCurrentDriverInformation();
     setInitialLocation();
-    setSourceAndDestinationMarkerIcons();
+
   }
 
-  Future<Position> _determinePosition() async {
-    bool serviceEnable;
-    LocationPermission permission;
-    serviceEnable = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnable) {
-      return Future.error('Location Services Are Disable');
-    }
-    permission = await Geolocator.checkPermission();
 
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permistion denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions permanently denied');
-    }
 
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    return position;
-  }
 
-  void showPinsOnMap() async {
-    Position position = await _determinePosition();
-    setState(() {
-      _markers.add(
-        Marker(
-          markerId: MarkerId('currentLocation'),
-          position: LatLng(position.latitude, position.longitude),
-          icon:
-          BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueYellow),
-        ),
-      );
 
-      _markers.add(
-        Marker(
-          markerId: MarkerId('sourcePin'),
-          position: currentLocation,
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        ),
-      );
-      _markers.add(
-        Marker(
-          markerId: MarkerId('destinationPin'),
-          position: destinationLocation,
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-        ),
-      );
-    });
-  }
-
-  void setPolylines() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      "AIzaSyCalOpqAMn-ubjg_EfYbywge3paFfuHdgc",
-      PointLatLng(
-        currentPosition.latitude,
-        currentPosition.longitude,
-      ),
-      PointLatLng(destinationLocation.latitude, destinationLocation.longitude),
-    );
-    if (result.status == 'OK') {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(
-          LatLng(point.latitude, point.longitude),
-        );
-      });
-      setState(() {
-        _polylines.add(
-          Polyline(
-            polylineId: PolylineId('polyline'),
-            color: Colors.purple,
-            points: polylineCoordinates,
-          ),
-        );
-      });
-    }
-  }
 
   void setInitialLocation() {
     currentLocation = LatLng(
@@ -177,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   driverIsOnlineNow(){
     Geofire.initialize("activeDrivers");
-    Geofire.setLocation(currentFirebaseUser!.uid, currentPosition.latitude, currentPosition.longitude);
+    Geofire.setLocation(currentFirebaseUser!.uid, currentPosition!.latitude, currentPosition!.longitude);
 
     DatabaseReference? ref = FirebaseDatabase.instance.ref().child("drivers").child(currentFirebaseUser!.uid).child("newRideStatus");
 
@@ -255,16 +186,15 @@ class _HomeScreenState extends State<HomeScreen> {
               myLocationEnabled: true,
               compassEnabled: false,
               tiltGesturesEnabled: false,
-              polylines: _polylines,
-              markers: _markers,
+              //TODO
+
               mapType: MapType.normal,
               initialCameraPosition: initialCameraPosition,
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
                 newGoogleMapController = controller;
 
-                showPinsOnMap();
-                setPolylines();
+
               },
             ),
           ),
@@ -345,19 +275,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
             child: Icon(Icons.online_prediction),
             onPressed: () async {
-              Position position = await _determinePosition();
-              GoogleMapController controller = await _controller.future;
-
-              controller.animateCamera(
-                CameraUpdate.newCameraPosition(
-                  CameraPosition(
-                    target: LatLng(position.latitude, position.longitude),
-                    zoom: 14,
-                  ),
-                ),
-              );
-
-              setState(() {});
+              fAuth.signOut();
+              Navigator.push(
+                         context, MaterialPageRoute(builder: (c) => SignInScreen()));
+              //
+              // Position position = await _determinePosition();
+              // GoogleMapController controller = await _controller.future;
+              //
+              // controller.animateCamera(
+              //   CameraUpdate.newCameraPosition(
+              //     CameraPosition(
+              //       target: LatLng(position.latitude, position.longitude),
+              //       zoom: 14,
+              //     ),
+              //   ),
+              // );
+              //
+              // setState(() {});
             },
             backgroundColor: Theme.of(context).primaryColorLight,
             foregroundColor: const Color(0xffCAFB09),
