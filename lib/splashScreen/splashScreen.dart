@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:uber_map_management/authentication/signInScreen.dart';
 import 'package:uber_map_management/global/global.dart';
 import 'package:uber_map_management/home_screen.dart';
+import 'package:uber_map_management/main_screen.dart';
+import 'package:uber_map_management/tabPages/home_tab.dart';
 
 
 
@@ -25,7 +27,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
     Timer(Duration(seconds: 3), () async {
       if( await fAuth.currentUser != null) {
         currentFirebaseUser = fAuth.currentUser;
-        Navigator.push(context, MaterialPageRoute(builder: (c)=>  HomeScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (c)=>  MainScreen()));
       }
       else{
         Navigator.push(context, MaterialPageRoute(builder: (c)=>  SignInScreen()));

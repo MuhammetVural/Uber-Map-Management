@@ -12,6 +12,7 @@ class PushNotificationSystem
 {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
+
   Future initializeCloudMessaging(BuildContext context) async
   {
     //1. Terminated

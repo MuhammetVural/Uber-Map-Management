@@ -64,7 +64,7 @@ class _HomeTabPageState extends State<HomeTabPage>
 
     LatLng latLngPosition = LatLng(driverCurrentPosition!.latitude, driverCurrentPosition!.longitude);
 
-    CameraPosition cameraPosition = CameraPosition(target: latLngPosition, zoom: 14);
+    CameraPosition cameraPosition = CameraPosition(target: latLngPosition, zoom: 16);
 
     newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
